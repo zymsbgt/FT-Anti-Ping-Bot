@@ -26,7 +26,7 @@ async def on_message(message):
         await message.channel.send(f'{username}, please **do not ping** FlashTeens!')
         #await message.channel.send(f'{message.author.mention}, please **do not ping** FlashTeens!')
         
-    if userid == 688311805319053336
+    if userid == 688311805319053336:
         if '<@559210445991444480>' in user_message.lower():
             await message.channel.send(f'{username}, please **do not ping** SprigatitoOTS!')
     
