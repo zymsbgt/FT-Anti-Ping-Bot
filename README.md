@@ -1,1 +1,1 @@
-A simple bot written in Python to discourage members from pinging FlashTeens.
+A simple bot written in Python to discourage members in the Republic of FlashTeens discord server from pinging FlashTeens.
