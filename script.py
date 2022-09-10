@@ -17,7 +17,6 @@ async def on_message(message):
     channel = str(message.channel.name)
     print(f'{username} in #{channel}: {user_message}')
     
-    # Make sure the bot doesn't respond to itself
     if message.author == client.user:
         return
     
@@ -28,25 +27,4 @@ async def on_message(message):
         if 'breaking news' in user_message.lower():
             await message.channel.send('🔍 ***Searching for who asked***')
 
-# Turn the bot online!
 client.run(secrets.TOKEN)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#input("Press ENTER to continue")
