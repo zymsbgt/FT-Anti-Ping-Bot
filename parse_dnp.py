@@ -1,5 +1,25 @@
-matchers = {}
-dup = set()
+duplicates = set()
+
+def parse(test=False, /):
+    global duplicates
+    duplicates = set()
+    matchers = {}
+    file = 'test-dnp.txt' if test else 'do-not-ping.txt'
+
+    with open(file, 'r') as dnp:
+        lines = [x.strip() for x in dnp.readlines()]
+        for index in range(len(lines)):
+            line = lines[index]
+            if line.find('#') == 0 or len(line) == 0:
+                continue
+
+            matcher = Matcher(line, index + 1)
+            thing = matcher.iden or matcher.user
+            if thing:
+                matchers[thing] = matcher.alias
+                continue
+
+    return matchers
 
 def warn(msg, line):
     print(f'[warn] {msg} at line {line}')
@@ -93,31 +113,15 @@ class Matcher:
 
         if self.iden or self.user:
             thing = self.iden or self.user
-            if thing in dup:
+            if thing in duplicates:
                 warn(f'duplicate entry {thing} detected', line)
                 self.alias = None
                 self.iden = None
                 self.user = None
                 return
             
-            dup.add(thing)
+            duplicates.add(thing)
             return # Passed all checks
 
         warn('format not recognized', line)
         pass #__init__
-
-def parse():
-    with open('do-not-ping.txt', 'r') as dnp:
-        lines = [x.strip() for x in dnp.readlines()]
-        for index in range(len(lines)):
-            line = lines[index]
-            if line.find('#') == 0 or len(line) == 0:
-                continue
-
-            matcher = Matcher(line, index + 1)
-            thing = matcher.iden or matcher.user
-            if thing:
-                matchers[thing] = matcher.alias
-                continue
-        pass
-    return matchers
