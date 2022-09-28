@@ -56,8 +56,6 @@ async def on_message(message):
                         sender = alias.replace('@', '@\u200b') if alias else str(user)
                         await message.channel.send(f'{username} please **do not ping** {sender}')
     
-    if 'Infinite Developer' in username:
-        if 'breaking news' in user_message.lower():
-            await message.channel.send('🔍 ***Searching for who asked***')
+    
 
 client.run(secrets.TOKEN)
