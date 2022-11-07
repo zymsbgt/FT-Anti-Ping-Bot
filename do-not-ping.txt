@@ -14,4 +14,5 @@
 <@343451476137607179>=FlashTeens
 559210445991444480=SprigatitoOTS
 Odd Stranger#7957=Sophie
+#<@245690058345021442>=ZymSB
 # Otherwise message will be formatted with f'{name}#{discriminator}'

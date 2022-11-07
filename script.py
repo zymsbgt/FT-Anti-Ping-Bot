@@ -42,8 +42,8 @@ async def on_message(message):
         if end != -1:
             mentionId = mention[:end]
             # Just to be sure 2
-            if True: # temporary replacement code
-            #if mentionId.isdigit() and 17 <= mentionId <= 18: # this line of code is faulty
+            #if True: # temporary replacement code
+            if mentionId.isdigit() and 17 <= int(mentionId) <= 18: # this line of code is faulty
                 # Ping may or may not be disallowed
                 if mentionId in no_ping_list:
                     alias = no_ping_list[mentionId]
@@ -58,6 +58,7 @@ async def on_message(message):
                         # Make sure alias can't ping anyone
                         sender = alias.replace('@', '@\u200b') if alias else str(user)
                         await message.channel.send(f'{message.author.mention}, please **do not ping** {sender}!')
+                        print(f'Offending message sent by {message.author} detected! See above')
     
     
 
