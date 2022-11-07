@@ -42,8 +42,7 @@ async def on_message(message):
         if end != -1:
             mentionId = mention[:end]
             # Just to be sure 2
-            #if True: # temporary replacement code
-            if mentionId.isdigit() and 17 <= int(mentionId) <= 18: # this line of code is faulty
+            if mentionId.isdigit() and 17 <= int(mentionId) <= 18:
                 # Ping may or may not be disallowed
                 if mentionId in no_ping_list:
                     alias = no_ping_list[mentionId]
