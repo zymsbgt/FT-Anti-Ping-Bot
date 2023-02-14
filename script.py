@@ -1,6 +1,9 @@
 import discord
-import secrets
+import os
+from dotenv import load_dotenv # new discord bot token library
+import secrets # old discord bot token
 
+load_dotenv()
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -33,9 +36,6 @@ async def on_message(message):
     if userid == 688311805319053336:
         if '<@559210445991444480>' in user_message.lower():
             await message.channel.send(f'{username}, please **do not ping** SprigatitoOTS!')
-    
-    if 'Infinite Developer' in username:
-        if 'breaking news' in user_message.lower():
-            await message.channel.send('🔍 ***Searching for who asked***')
 
-client.run(secrets.TOKEN)
+token = os.getenv('DISCORD_TOKEN')
+client.run(token)
