@@ -25,7 +25,7 @@ async def on_message(message):
     
     print(f'{username} in #{channel}: {user_message}')
     
-    if message.author == client.user:
+    if message.author == client.user or message.author.bot:
         return
     
     for user in mentioned_users:
