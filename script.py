@@ -26,13 +26,12 @@ async def on_message(message):
         channel = str(message.channel.name)
         mentioned_users = message.mentions
 
-        print(f'{username} in #{channel}: {user_message}')
-
         if message.author == client.user or message.author.bot:
             return
 
         for user in mentioned_users:
             if str(user.id) in do_not_ping:
+                print(f'{username} in #{channel}: {user_message}')
                 userWithoutHashtag = str(user).split('#')[0]
                 await message.channel.send(f'{username}, please **do not ping** {userWithoutHashtag}!')
                 response = True
