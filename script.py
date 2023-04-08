@@ -44,6 +44,7 @@ async def on_message(message):
                         print(f"{message.author} mentioned {userWithoutHashtag} in a reply less than 30 minutes after the original message was sent. Skip sending reminder")
                     else:
                         await message.channel.send(f'{username}, please **do not ping** {userWithoutHashtag}!')
+        return
 
 async def on_message_edit(before, after):
     if before.content != after.content:
