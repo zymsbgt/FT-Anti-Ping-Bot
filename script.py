@@ -40,16 +40,28 @@ async def on_message(message):
             if message.reference is None: 
                 await message.channel.send(f'{username}, please **do not ping** {userWithoutHashtag}!')
             else: # user was ping-replied
-                print('in reply to')
-                reply_message = await message.channel.fetch_message(message.reference.message_id)
-                print(f'{reply_message}')
-                time_difference = datetime.utcnow().replace(tzinfo=pytz.utc) - reply_message.created_at
-                if time_difference < timedelta(minutes=30):
-                    print(f"{message.author} mentioned {userWithoutHashtag} in a reply less than 30 minutes after the original message was sent. Skip sending reminder")
-                else:
-                    print(f"{message.author} mentioned {userWithoutHashtag} in a reply more than 30 minutes after the original message was sent. Ping reminder sent.)
-                    await message.channel.send(f'{username}, please **do not ping** {userWithoutHashtag}!')
+                await CheckReply(message, username, userWithoutHashtag)
+    
+    if "anti ping check" in message.content:
+        print(f'{username} in #{channel}: {user_message}')
+        if message.reference is None: 
+            await message.channel.send(f'{username}, please **do not ping** {username}!')
+        else: # user was ping-replied
+            for user in mentioned_users:
+                userWithoutHashtag = str(user).split('#')[0]
+                await CheckReply(message, username, userWithoutHashtag)
 
+async def CheckReply(message, username, userWithoutHashtag):
+    print('in reply to')
+    reply_message = await message.channel.fetch_message(message.reference.message_id)
+    print(f'{reply_message}')
+    time_difference = datetime.utcnow().replace(tzinfo=pytz.utc) - reply_message.created_at
+    if time_difference < timedelta(minutes=30):
+        print(f"{message.author} mentioned {userWithoutHashtag} in a reply less than 30 minutes after the original message was sent. Skip sending reminder")
+    else:
+        print(f"{message.author} mentioned {userWithoutHashtag} in a reply more than 30 minutes after the original message was sent. Ping reminder sent.")
+        await message.channel.send(f'{username}, please **do not ping** {userWithoutHashtag}!')
+    return
 
 async def on_message_edit(before, after):
     if before.content != after.content:
