@@ -2,7 +2,7 @@ import discord
 import os
 import time
 import pytz
-from dotenv import load_dotenv # new discord bot token library
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 
 load_dotenv()
@@ -42,6 +42,7 @@ async def on_message(message):
             else: # user was ping-replied
                 await CheckReply(message, username, userWithoutHashtag)
     
+    # This code exists here solely for testing purposes.
     if "anti ping check" in message.content:
         print(f'{username} in #{channel}: {user_message}')
         if message.reference is None: 
@@ -66,7 +67,12 @@ async def CheckReply(message, username, userWithoutHashtag):
 async def on_message_edit(before, after):
     if before.content != after.content:
         pass
-        # print("Message edited!")
+    # Check if the edited message mentions any users from 'do_not_ping' list (does not work yet)
+    mentioned_users = after.mentions
+    for user in mentioned_users:
+        if str(user.id) in do_not_ping:
+            userWithoutHashtag = str(user).split('#')[0]
+            await after.channel.send(f'{userWithoutHashtag} has been mentioned in an edited message. Please **do not ping** them!')
 
 token = os.getenv('DISCORD_TOKEN')
 client.run(token)
