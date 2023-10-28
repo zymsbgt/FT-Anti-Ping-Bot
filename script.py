@@ -38,7 +38,7 @@ async def on_message(message):
             userWithoutHashtag = str(user).split('#')[0]
             print(f'{username} in #{channel}: {user_message}')
             if message.reference is None: 
-                await message.channel.send(f'{username}, please **do not ping** {userWithoutHashtag}!')
+                await PingReminder(message, username, userWithoutHashtag)
             else: # user was ping-replied
                 await CheckReply(message, username, userWithoutHashtag)
     
@@ -52,6 +52,9 @@ async def on_message(message):
                 userWithoutHashtag = str(user).split('#')[0]
                 await CheckReply(message, username, userWithoutHashtag)
 
+async def PingReminder(message, messageSender = 'null', userBeingPinged = 'null'):
+    await message.channel.send(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@323588845251723265>||')
+
 async def CheckReply(message, username, userWithoutHashtag):
     print('in reply to')
     reply_message = await message.channel.fetch_message(message.reference.message_id)
@@ -61,7 +64,7 @@ async def CheckReply(message, username, userWithoutHashtag):
         print(f"{message.author} mentioned {userWithoutHashtag} in a reply less than 30 minutes after the original message was sent. Skip sending reminder")
     else:
         print(f"{message.author} mentioned {userWithoutHashtag} in a reply more than 30 minutes after the original message was sent. Ping reminder sent.")
-        await message.channel.send(f'{username}, please **do not ping** {userWithoutHashtag}!')
+        await PingReminder(message, username, userWithoutHashtag)
     return
 
 async def on_message_edit(before, after):
