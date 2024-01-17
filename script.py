@@ -31,7 +31,7 @@ async def on_message(message):
     channel = str(message.channel.name)
     mentioned_users = message.mentions
 
-    if message.author == client.user or message.author.bot:
+    if message.author == client.user:
         return
 
     for user in mentioned_users:
@@ -55,6 +55,7 @@ async def on_message(message):
 
 async def PingReminder(message, messageSender = 'null', userBeingPinged = 'null'):
     guild = message.guild
+    invertMessageAuthorBot = not message.author.bot
 
     # Check if the user is a member of the server
     try:
@@ -62,12 +63,16 @@ async def PingReminder(message, messageSender = 'null', userBeingPinged = 'null'
     except:
         pingQuadmoo = None
 
-    if pingQuadmoo is not None:
-        # await message.channel.send(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@323588845251723265>||')
-        await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@323588845251723265>||', mention_author=True)
-    else:
-        # await message.channel.send(f'{messageSender}, please **do not ping** {userBeingPinged}!')
-        await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!', mention_author=True)
+    if pingQuadmoo is not None: # quadmoo is in the discord server
+        if message.author.bot:
+            await message.reply(f'<@323588845251723265>', mention_author=False)
+        else:
+            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@323588845251723265>||', mention_author=True)
+    else: # quadmoo is not in the discord server
+        if guild.id == '443253214859755522': # shonx cave
+            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@&1136545756845707265>||', mention_author=invertMessageAuthorBot)
+        else:
+            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!', mention_author=invertMessageAuthorBot)
 
 async def CheckReply(message, username, userWithoutHashtag):
     print('in reply to')
