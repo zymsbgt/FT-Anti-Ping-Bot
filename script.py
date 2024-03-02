@@ -57,22 +57,14 @@ async def PingReminder(message, messageSender = 'null', userBeingPinged = 'null'
     guild = message.guild
     invertMessageAuthorBot = not message.author.bot
 
-    # Check if the user is a member of the server
-    try:
-        pingQuadmoo = await guild.fetch_member(323588845251723265)
-    except:
-        pingQuadmoo = None
-
-    if pingQuadmoo is not None: # quadmoo is in the discord server
-        if message.author.bot:
-            await message.reply(f'<@323588845251723265>', mention_author=False)
-        else:
-            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@323588845251723265>||', mention_author=True)
-    else: # quadmoo is not in the discord server
-        if guild.id == '443253214859755522': # shonx cave
-            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@&1136545756845707265>||', mention_author=invertMessageAuthorBot)
-        else:
-            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!', mention_author=invertMessageAuthorBot)
+    if guild.id == '900946140474769418': # Geyser Host
+        await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@&900946337007304724>||', mention_author=invertMessageAuthorBot)
+    if guild.id == '612289903769944064': # RoFT Fan Chat
+        await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@&893332671126716426>||', mention_author=invertMessageAuthorBot)
+    if guild.id == '443253214859755522': # Shonx Cave
+        await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@&1136545756845707265>||', mention_author=invertMessageAuthorBot)
+    else:
+        await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!', mention_author=invertMessageAuthorBot)
 
 async def CheckReply(message, username, userWithoutHashtag):
     print('in reply to')
