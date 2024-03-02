@@ -64,10 +64,13 @@ async def PingReminder(message, messageSender = 'null', userBeingPinged = 'null'
         pingQuadmoo = None
 
     if pingQuadmoo is not None: # quadmoo is in the discord server
-        if message.author.bot:
-            await message.reply(f'<@323588845251723265>', mention_author=False)
+        if guid.id == '900946140474769418': # Geyser Host
+            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@&900946337007304724>||', mention_author=invertMessageAuthorBot)
         else:
-            await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@323588845251723265>||', mention_author=True)
+            if message.author.bot:
+                await message.reply(f'<@&893332671126716426>', mention_author=False)
+            else:
+                await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@323588845251723265>||', mention_author=True)
     else: # quadmoo is not in the discord server
         if guild.id == '443253214859755522': # shonx cave
             await message.reply(f'{messageSender}, please **do not ping** {userBeingPinged}!\n\n||<@&1136545756845707265>||', mention_author=invertMessageAuthorBot)
